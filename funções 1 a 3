@@ -1,4 +1,4 @@
-#funções def tarefa dia 6 
+ATIVIDADE 3#funções def tarefa dia 6 
 import random
 
 def jogar_craps():
@@ -24,3 +24,20 @@ def jogar_craps():
 
 if __name__ == "__main__":
     jogar_craps()
+ATIVIDADE2
+horas=float(input("digite seu horario em brasilia: "))
+def horasbb (horas):
+    horas=horas%12
+if (horas>=12):
+    print("P.M" , horas,)
+if (horas<=12):
+    print("A.M",horas,)
+ATIVIDADE1 
+n1=int(input("digite um numero: "))
+n2=int(input("digite outro numero: "))
+n3=int(input("ditite outro numero:  "))
+def acelora(n1,n2,n3):
+    soma=n1+n2+n3
+    return print(soma)
+acelora(n1,n2,n3)
+
