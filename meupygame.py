@@ -2,15 +2,13 @@ import pygame
 
 
 pygame.init()
-screen = pygame.display.set_mode((800, 500))
+screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 running = True
 dt = 0
 
 player_pos = pygame.Vector2(screen.get_width() / 5, screen.get_height() / 2)
 player_2 = pygame.Vector2(screen.get_width() / 5, screen.get_height() / 2)
-player_image = pygame.image.load("C:\\Users\\SENAI\\Downloads\\ninja.png")
-player_image = pygame.transform.scale(player_image, (70, 70))
 
 while running:
     for event in pygame.event.get():

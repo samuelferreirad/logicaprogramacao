@@ -14,26 +14,26 @@ pygame.display.set_caption("Banana Kong Style")
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
+
 # Definindo o clock para controlar o FPS
 clock = pygame.time.Clock()
 
 # Carregando a imagem de fundo
-background_image = pygame.image.load('c:/Users/SENAI/Pictures/pika.png')  # Substitua com o caminho correto da sua imagem
+background_image = pygame.image.load('c:/Users/SENAI/Documents/jogo1.pnj.jfif')  # Substitua com o caminho correto da sua imagem
 background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
 
-# Carregando a imagem do player (personagem)
-player_image = pygame.image.load('c:/Users/SENAI/Downloads/malon-removebg-preview.png')  # Substitua com o caminho correto da sua imagem
-player_image = pygame.transform.scale(player_image, (130, 130))  # Ajuste o tamanho da imagem conforme necessário
 
 # Classe para o jogador (personagem)
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = player_image  # Usando a imagem carregada do player
+        self.image = pygame.Surface((50, 50))  # Criando uma superfície para o personagem
+        self.image.fill(WHITE)
         self.rect = self.image.get_rect()
-        self.rect.center = (40, screen_height - 50)  # Define a posição inicial
+        self.rect.center = (40, screen_height - 50   )
         self.velocity_y = 0
         self.is_jumping = False
+        print(self.rect.center)
 
     def update(self): 
         # Movimentação lateral
@@ -57,18 +57,18 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         if not self.is_jumping:
-            self.velocity_y = -18  # Força do pulo
+            self.velocity_y = -15  # Força do pulo
 
 
 # Classe para os obstáculos
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((50, 50))
+        self.image = pygame.Surface((30, 30))
         self.image.fill(RED)
         self.rect = self.image.get_rect()
         self.rect.x = screen_width
-        self.rect.y = screen_height - 50
+        self.rect.y = screen_height - 30
 
     def update(self):
         self.rect.x -= 5  # Movimento dos obstáculos
@@ -93,7 +93,7 @@ def game_loop():
 
     # Adicionando obstáculos
     obstacles = pygame.sprite.Group()
-    for _ in range(5):  # Adiciona 5 obstáculos no início
+    for _ in range(50):  # Adiciona 5 obstáculos no início
         obstacle = Obstacle()
         all_sprites.add(obstacle)
         obstacles.add(obstacle)

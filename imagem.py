@@ -7,8 +7,9 @@ clock = pygame.time.Clock()
 running = True
 
 # Carregando a imagem do jogador
-player_image = pygame.image.load("C:\\Users\\SENAI\\Downloads\\ninja.png")  # Caminho atualizado
+player_image = pygame.image.load("C://Users\\SENAI//Downloads//ninja.png")  # Caminho atualizado
 player_image = pygame.transform.scale(player_image, (80, 80))  # Ajustando o tamanho da imagem
+imagem = pygame.image.load("")
 
 player_pos = pygame.Vector2(screen.get_width() / 5, screen.get_height() / 2)
 player_2 = pygame.Vector2(screen.get_width() / 5, screen.get_height() / 2)
