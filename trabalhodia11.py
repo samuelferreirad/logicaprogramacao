@@ -1,85 +1,50 @@
 import pygame
-import random
 
 # Inicializando o Pygame
 pygame.init()
 
 # Definindo as dimensões da tela
-screen_width = 800
-screen_height = 600
+screen_width = 1200
+screen_height = 800
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Banana Kong Style")
-
-# Definindo cores (apenas para objetos)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-
 
 # Definindo o clock para controlar o FPS
 clock = pygame.time.Clock()
 
 # Carregando a imagem de fundo
-background_image = pygame.image.load('c:/Users/SENAI/Documents/jogo1.pnj.jfif')  # Substitua com o caminho correto da sua imagem
+background_image = pygame.image.load('c:/Users/SENAI/Pictures/imagemdofazen.png')  # Substitua com o caminho correto da sua imagem
 background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
+
+# Carregando a imagem do jogador
+player_image = pygame.image.load('c:/Users/SENAI/Pictures/cara.png')  # Substitua com o caminho correto da sua imagem do jogador
+player_image = pygame.transform.scale(player_image, (100, 100))  # Ajuste o tamanho da imagem do jogador conforme necessário
 
 
 # Classe para o jogador (personagem)
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((50, 50))  # Criando uma superfície para o personagem
-        self.image.fill(WHITE)
-        self.rect = self.image.get_rect()
-        self.rect.center = (40, screen_height - 50   )
+        self.image = player_image  # Atribuindo a imagem carregada ao jogador
+        self.rect = self.image.get_rect()  # Obtendo o retângulo da imagem para posicionamento
+        self.rect.center = (screen_width // 2, screen_height // 2)  # Centralizando o jogador na tela
         self.velocity_y = 0
         self.is_jumping = False
-        print(self.rect.center)
 
     def update(self): 
-        # Movimentação lateral
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.rect.x -= 5
-        if keys[pygame.K_RIGHT]:
-            self.rect.x += 5
-
-        # Gravidade
-        self.velocity_y += 1  # Aumenta a velocidade de queda
-        self.rect.y += self.velocity_y
-
-        # Pulo
-        if self.rect.bottom >= screen_height - 20:  # Chão
-            self.velocity_y = 0
-            self.rect.bottom = screen_height - 20
-            self.is_jumping = False
-        elif self.rect.bottom < screen_height - 20:  # Se está no ar
-            self.is_jumping = True
+        # O jogador não se move lateralmente, então esse método permanece vazio para não alterar a posição dele
+        pass
 
     def jump(self):
         if not self.is_jumping:
             self.velocity_y = -15  # Força do pulo
 
 
-# Classe para os obstáculos
-class Obstacle(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.Surface((30, 30))
-        self.image.fill(RED)
-        self.rect = self.image.get_rect()
-        self.rect.x = screen_width
-        self.rect.y = screen_height - 30
-
-    def update(self):
-        self.rect.x -= 5  # Movimento dos obstáculos
-        if self.rect.right < 0:
-            self.rect.x = screen_width
-            self.rect.y = screen_height - 30  # Define uma nova posição vertical
-            self.rect.height = random.randint(20, 50)  # Aleatoriza a altura dos obstáculos
-
 # Função para desenhar o fundo
-def draw_background():
-    screen.blit(background_image, (0, 0))  # Desenha a imagem de fundo na tela
+def draw_background(background_x):
+    # Desenha o fundo movendo-o para a esquerda
+    screen.blit(background_image, (background_x % screen_width - screen_width, 0))  # Parte do fundo à esquerda
+    screen.blit(background_image, (background_x % screen_width, 0))  # Parte do fundo à direita
 
 
 # Função principal do jogo
@@ -91,12 +56,8 @@ def game_loop():
     player = Player()
     all_sprites.add(player)
 
-    # Adicionando obstáculos
-    obstacles = pygame.sprite.Group()
-    for _ in range(50):  # Adiciona 5 obstáculos no início
-        obstacle = Obstacle()
-        all_sprites.add(obstacle)
-        obstacles.add(obstacle)
+    # Inicializa a posição do fundo
+    background_x = 0
 
     running = True
     while running:
@@ -110,13 +71,11 @@ def game_loop():
         # Atualizar os sprites
         all_sprites.update()
 
-        # Verificar colisão com obstáculos
-        if pygame.sprite.spritecollide(player, obstacles, False):
-            print("Game Over!")
-            running = False
+        # Atualizar a posição do fundo, movendo-o para a esquerda
+        background_x -= 5  # Move o fundo para a esquerda (ajuste conforme necessário)
 
-        # Desenhar o fundo e os sprites
-        draw_background()
+        # Desenhar o fundo e os sprites (o jogador está parado)
+        draw_background(background_x)
         all_sprites.draw(screen)
 
         # Atualizar a tela
